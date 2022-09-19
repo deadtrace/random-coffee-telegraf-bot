@@ -1,0 +1,20 @@
+{
+  "name": "random-coffee",
+  "version": "1.0.0",
+  "description": "Telegram Bot for Random Coffee Events of IT Tribe",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon --ignore data/ ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "mongoose": "^6.6.1",
+    "telegraf": "^4.9.1",
+    "telegraf-session-local": "^2.1.0"
+  }
+}
