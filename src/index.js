@@ -25,12 +25,15 @@ import startCommand from "./commands/start.js";
 
 // scenes
 import createProfileScene from "./scenes/createProfileScene.js";
+import viewProfileScene from "./scenes/viewProfileScene.js";
+import editProfileScene from "./scenes/editProfileScene.js";
 import giveBotFeedbackScene from "./scenes/giveBotFeedbackScene.js";
 
 // actions
 import ACTIONS from "./actions/actionsList.js";
 import createProfileAction from "./actions/createProfileAction.js";
 import giveBotFeedbackAction from "./actions/giveBotFeedbackAction.js";
+import viewProfileAction from "./actions/viewProfileAction.js";
 
 //helpers
 import showProfileInfo from "./helpers/showProfileInfo.js";
@@ -39,7 +42,12 @@ import showMainButtons from "./helpers/showMainButtons.js";
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
 bot.use(new TSL({ database: "data/session.json" }).middleware());
-const stage = new Scenes.Stage([createProfileScene, giveBotFeedbackScene]);
+const stage = new Scenes.Stage([
+  createProfileScene,
+  giveBotFeedbackScene,
+  viewProfileScene,
+  editProfileScene,
+]);
 bot.use(stage.middleware());
 
 // bot reactions
@@ -58,6 +66,7 @@ bot.command("menu", async (ctx) => {
 // bot actions
 bot.action(ACTIONS.CREATE_PROFILE, createProfileAction);
 bot.action(ACTIONS.GIVE_FEEDBACK, giveBotFeedbackAction);
+bot.action(ACTIONS.VIEW_PROFILE, viewProfileAction);
 bot.action(/.+/, (ctx) => {
   return ctx.answerCbQuery(`${ctx.match[0]}`);
 });

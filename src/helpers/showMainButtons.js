@@ -11,7 +11,7 @@ const showMainButtons = async (ctx) => {
             "register-for-meetup"
           ),
         ],
-        [Markup.button.callback("Профиль 👤", "view-profile")],
+        [Markup.button.callback("Профиль 👤", ACTIONS.VIEW_PROFILE)],
         [
           Markup.button.callback(
             "Дать фидбек по работе бота 🎤",
