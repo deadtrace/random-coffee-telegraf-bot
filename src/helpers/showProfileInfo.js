@@ -1,4 +1,4 @@
-const showProfileInfo = async (ctx) => {
+const showProfileInfo = async (ctx, userId) => {
   const { name, workspace, hobbies, photo } = ctx.session.userInfo;
   const text = `Твой профиль:\n*Имя и фамилия:* ${name}\n*Команда, роль, задачи 👨🏻‍💻:*\n${workspace}\n${
     hobbies ? `*Хобби, увлечения 🏂🏻:*\n${hobbies}` : ""

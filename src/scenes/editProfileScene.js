@@ -3,19 +3,61 @@ import SCENES from "./scenesList.js";
 import showMainButtons from "../helpers/showMainButtons.js";
 
 const handleEdit = new Composer();
-handleEdit.action("back", async (ctx) => {
+handleEdit.action("edit-name", async (ctx) => {
+  await ctx.answerCbQuery();
   await ctx.deleteMessage();
-  await showMainButtons(ctx);
-  return ctx.scene.leave();
+  await ctx.scene.leave();
+  return ctx.scene.enter(SCENES.EDIT_PROFILE_NAME);
+});
+handleEdit.action("edit-workspace", async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.deleteMessage();
+  await ctx.scene.leave();
+  return ctx.scene.enter(SCENES.EDIT_PROFILE_WORKSPACE);
+});
+handleEdit.action("edit-hobbies", async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.deleteMessage();
+  await ctx.scene.leave();
+  return ctx.scene.enter(SCENES.EDIT_PROFILE_HOBBIES);
+});
+handleEdit.action("edit-photo", async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.deleteMessage();
+  await ctx.scene.leave();
+  return ctx.scene.enter(SCENES.EDIT_PROFILE_PHOTO);
+});
+handleEdit.action("back", async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.deleteMessage();
+  await ctx.scene.leave();
+  return ctx.scene.enter(SCENES.VIEW_PROFILE);
 });
 
 const editProfileScene = new Scenes.WizardScene(
   SCENES.EDIT_PROFILE,
   async (ctx) => {
-    const { message_id } = await ctx.reply(
-      "Что-то можно редактировать",
-      Markup.inlineKeyboard([Markup.button.callback("Назад", "back")])
-    );
+    const { message_id } = await ctx.reply("Выберите опцию:", {
+      reply_markup: {
+        inline_keyboard: [
+          [Markup.button.callback("Изменить имя 📝", "edit-name")],
+          [
+            Markup.button.callback(
+              "Изменить команду, роль, задачи 💼",
+              "edit-workspace"
+            ),
+          ],
+          [
+            Markup.button.callback(
+              "Изменить хобби и увлечения 🏂🏻",
+              "edit-hobbies"
+            ),
+          ],
+          [Markup.button.callback("Изменить фотографию 📸", "edit-photo")],
+          [Markup.button.callback("Назад 🔙", "back")],
+        ],
+      },
+    });
     ctx.session.lastBotMessage = message_id;
     return ctx.wizard.next();
   },
