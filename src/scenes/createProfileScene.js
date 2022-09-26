@@ -2,7 +2,8 @@ import { Scenes, Composer, Markup } from "telegraf";
 import SCENES from "./scenesList.js";
 import showProfileInfo from "../helpers/showProfileInfo.js";
 import showMainButtons from "../helpers/showMainButtons.js";
-import UserModel from "../../models/User.js";
+import User from "../models/User.js";
+import startCommand from "../commands/start.js";
 
 const name = new Composer();
 name.on("text", async (ctx) => {
@@ -49,14 +50,21 @@ hobbies.action("next", async (ctx) => {
 
 const photo = new Composer();
 const photoStageHandler = async (ctx) => {
-  // const doc = new UserModel({
-  //   ...ctx.wizard.state.data,
-  // });
-  // await doc.save();
-  ctx.session.userInfo = { ...ctx.wizard.state.data };
-  await ctx.reply("Данные успешно сохранены!");
-  await showProfileInfo(ctx);
-  await showMainButtons(ctx);
+  try {
+    const userObject = { ...ctx.wizard.state.data, tid: ctx.chat.id };
+    if (ctx.chat.username) userObject.username = ctx.chat.username;
+    await User.findOneAndReplace({ tid: ctx.chat.id }, userObject, {
+      upsert: true,
+    });
+
+    await ctx.reply("Данные успешно сохранены!");
+    await showProfileInfo(ctx);
+    await showMainButtons(ctx);
+  } catch (error) {
+    await ctx.reply("К сожалению, сохранение данных прошло неуспешно.");
+    await startCommand(ctx);
+    console.log(error);
+  }
   return ctx.scene.leave();
 };
 photo.on("photo", async (ctx) => {

@@ -9,16 +9,17 @@ import mongoose from "mongoose";
 const { BOT_TOKEN, DB_USERNAME, DB_PASSWORD, DB_LINK, DB_COLLECTION } =
   process.env;
 
-// mongoose
-//   .connect(
-//     `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_LINK}/${DB_COLLECTION}?retryWrites=true&w=majority`
-//   )
-//   .then(() => {
-//     console.log("DB OK");
-//   })
-//   .catch((err) => {
-//     console.log("DB ERROR", err);
-//   });
+mongoose
+  .connect(
+    `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_LINK}/${DB_COLLECTION}`
+  )
+  .then(() => {
+    console.log("DB CONNECTED");
+  })
+  .catch((error) => {
+    console.log("DB NOT CONNECTED");
+    console.log(error);
+  });
 
 // commands
 import startCommand from "./commands/start.js";
