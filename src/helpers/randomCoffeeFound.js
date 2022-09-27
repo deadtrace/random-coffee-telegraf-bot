@@ -4,7 +4,7 @@ import { Markup } from "telegraf";
 
 const randomCoffeeFound = async (ctx) => {
   await ctx.telegram.sendMessage(
-    process.env.TEST_USER_ID,
+    process.env.ADMIN_ID,
     `Мы нашли тебе коллегу для встречи - …
 Постарайся провести встречу в течение одной недели.
 Провели встречу – проинформируй об успешности встречи по кнопке снизу

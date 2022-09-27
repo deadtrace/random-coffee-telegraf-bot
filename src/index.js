@@ -65,9 +65,6 @@ bot.use(stage.middleware());
 // bot reactions
 bot.start(startCommand);
 // FOR DEVELOP PURPOSES ONLY. TODO: DELETE
-bot.command("session", (ctx) => {
-  ctx.reply(ctx.session);
-});
 bot.command("profile", async (ctx) => {
   showProfileInfo(ctx);
 });

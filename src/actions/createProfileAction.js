@@ -1,7 +1,8 @@
 import SCENES from "../scenes/scenesList.js";
 
-const createProfileAction = (ctx) => {
-  ctx.editMessageReplyMarkup();
+const createProfileAction = async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.editMessageReplyMarkup();
   ctx.scene.enter(SCENES.CREATE_PROFILE);
 };
 
