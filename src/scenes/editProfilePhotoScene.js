@@ -1,16 +1,28 @@
 import { Scenes, Composer, Markup } from "telegraf";
 import SCENES from "./scenesList.js";
+import User from "../models/User.js";
 
 const handleEdit = new Composer();
 handleEdit.on("photo", async (ctx) => {
-  ctx.session.userInfo.photo = ctx.message.photo;
-  await ctx.telegram.editMessageReplyMarkup(
-    ctx.chat.id,
-    ctx.session.lastBotMessage,
-    "",
-    {}
-  );
-  await ctx.reply("Данные изменены!");
+  try {
+    await User.updateOne(
+      { tid: ctx.chat.id },
+      {
+        photo_id: ctx.message.photo[0].file_id,
+        username: ctx.chat.username ?? null,
+      }
+    );
+    await ctx.telegram.editMessageReplyMarkup(
+      ctx.chat.id,
+      ctx.session.lastBotMessage,
+      "",
+      {}
+    );
+    await ctx.reply("Данные изменены!");
+  } catch (error) {
+    console.log(error);
+    await ctx.reply("Произошла ошибка при обновлении данных.");
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.EDIT_PROFILE);
 });

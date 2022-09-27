@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema(
     },
     hobbies: String,
     photo_id: String,
+    registered: { type: Boolean, required: true },
   },
   {
     timestamps: true,

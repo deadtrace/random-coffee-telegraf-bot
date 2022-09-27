@@ -51,7 +51,11 @@ hobbies.action("next", async (ctx) => {
 const photo = new Composer();
 const photoStageHandler = async (ctx) => {
   try {
-    const userObject = { ...ctx.wizard.state.data, tid: ctx.chat.id };
+    const userObject = {
+      ...ctx.wizard.state.data,
+      tid: ctx.chat.id,
+      registered: false,
+    };
     if (ctx.chat.username) userObject.username = ctx.chat.username;
     await User.findOneAndReplace({ tid: ctx.chat.id }, userObject, {
       upsert: true,

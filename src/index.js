@@ -30,7 +30,7 @@ import viewProfileScene from "./scenes/viewProfileScene.js";
 import editProfileScene from "./scenes/editProfileScene.js";
 import giveBotFeedbackScene from "./scenes/giveBotFeedbackScene.js";
 import editProfileNameScene from "./scenes/editProfileNameScene.js";
-import editProfileWorkspaceScene from "./scenes/editProfileWorkspace.js";
+import editProfileWorkspaceScene from "./scenes/editProfileWorkspaceScene.js";
 import editProfileHobbiesScene from "./scenes/editProfileHobbiesScene.js";
 import editProfilePhotoScene from "./scenes/editProfilePhotoScene.js";
 
