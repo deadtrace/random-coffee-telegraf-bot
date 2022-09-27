@@ -68,7 +68,7 @@ const photoStageHandler = async (ctx) => {
   return ctx.scene.leave();
 };
 photo.on("photo", async (ctx) => {
-  ctx.wizard.state.data.photo = ctx.message.photo;
+  ctx.wizard.state.data.photo_id = ctx.message.photo[0].file_id;
   await photoStageHandler(ctx);
 });
 photo.action("next", async (ctx) => {

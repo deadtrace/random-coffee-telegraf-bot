@@ -1,15 +1,26 @@
-const showProfileInfo = async (ctx, userId) => {
-  const { name, workspace, hobbies, photo } = ctx.session.userInfo;
-  const text = `Твой профиль:\n*Имя и фамилия:* ${name}\n*Команда, роль, задачи 👨🏻‍💻:*\n${workspace}\n${
-    hobbies ? `*Хобби, увлечения 🏂🏻:*\n${hobbies}` : ""
-  }`;
-  if (photo) {
-    await ctx.replyWithPhoto(photo[0].file_id, {
-      parse_mode: "MarkdownV2",
-      caption: text,
-    });
-  } else {
-    await ctx.replyWithMarkdownV2(text);
+import User from "../models/User.js";
+import showMainButtons from "./showMainButtons.js";
+
+const showProfileInfo = async (ctx) => {
+  try {
+    const user = await User.findOne({ tid: ctx.chat.id }).exec();
+    const { name, workspace, hobbies, photo_id } = user;
+    const text = `Твой профиль:\n*Имя и фамилия:* ${name}\n*Команда, роль, задачи 👨🏻‍💻:*\n${workspace}\n${
+      hobbies ? `*Хобби, увлечения 🏂🏻:*\n${hobbies}` : ""
+    }`;
+
+    if (photo_id) {
+      await ctx.replyWithPhoto(photo_id, {
+        parse_mode: "MarkdownV2",
+        caption: text,
+      });
+    } else {
+      await ctx.replyWithMarkdownV2(text);
+    }
+  } catch (error) {
+    console.log(error);
+    await ctx.reply("Произошла ошибка при загрузке данных пользователя");
+    await showMainButtons(ctx);
   }
 };
 

@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     hobbies: String,
-    photo: String,
+    photo_id: String,
   },
   {
     timestamps: true,
