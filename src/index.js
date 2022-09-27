@@ -23,6 +23,7 @@ mongoose
 
 // commands
 import startCommand from "./commands/start.js";
+import initMeetups from "./commands/init-meetups.js";
 
 // scenes
 import createProfileScene from "./scenes/createProfileScene.js";
@@ -46,6 +47,7 @@ import unegisterFromRandomCoffeeAction from "./actions/unregisterFromRandomCoffe
 import showProfileInfo from "./helpers/showProfileInfo.js";
 import showMainButtons from "./helpers/showMainButtons.js";
 import randomCoffeeFound from "./helpers/randomCoffeeFound.js";
+import showPartnerProfile from "./helpers/showPartnerProfile.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
@@ -74,6 +76,7 @@ bot.command("menu", async (ctx) => {
 bot.command("register", async (ctx) => {
   randomCoffeeFound(ctx);
 });
+bot.command("initmeetups", initMeetups);
 
 // bot actions
 bot.action(ACTIONS.CREATE_PROFILE, createProfileAction);
@@ -84,10 +87,9 @@ bot.action(
   ACTIONS.UNREGISTER_FROM_RANDOM_COFFEE,
   unegisterFromRandomCoffeeAction
 );
-bot.action(/meetup_(.+)/, async (ctx, next) => {
+bot.action(/meetup_watch-partner_(.+)/, async (ctx, next) => {
   await ctx.answerCbQuery();
-  await ctx.reply(ctx.match[1]);
-  await ctx.editMessageReplyMarkup({});
+  await showPartnerProfile(ctx, +ctx.match[1]);
 });
 bot.action(/.+/, async (ctx) => {
   await ctx.deleteMessage();
