@@ -17,13 +17,24 @@ const initMeetups = async (ctx) => {
         const [user1, user2] = pair;
         try {
           await Meeting.deleteMany({});
-          await Meeting.create({
+          const meeting = await Meeting.create({
             tid1: user1.tid,
             tid2: user2.tid,
             status: MEETING_STATUSES.NEW,
           });
-          await randomCoffeeFound(ctx, user1.tid, user2);
-          await randomCoffeeFound(ctx, user2.tid, user1);
+
+          await randomCoffeeFound(
+            ctx,
+            user1.tid,
+            user2,
+            meeting._id.toString()
+          );
+          await randomCoffeeFound(
+            ctx,
+            user2.tid,
+            user1,
+            meeting._id.toString()
+          );
         } catch (error) {
           console.log(error);
         }

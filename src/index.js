@@ -23,7 +23,8 @@ mongoose
 
 // commands
 import startCommand from "./commands/start.js";
-import initMeetups from "./commands/init-meetups.js";
+import initMeetups from "./commands/initMeetups.js";
+import remindMeetups from "./commands/remindMeetups.js";
 
 // scenes
 import createProfileScene from "./scenes/createProfileScene.js";
@@ -48,6 +49,7 @@ import showProfileInfo from "./helpers/showProfileInfo.js";
 import showMainButtons from "./helpers/showMainButtons.js";
 import randomCoffeeFound from "./helpers/randomCoffeeFound.js";
 import showPartnerProfile from "./helpers/showPartnerProfile.js";
+import cancelMeeting from "./helpers/cancelMeeting.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
@@ -76,7 +78,8 @@ bot.command("menu", async (ctx) => {
 bot.command("register", async (ctx) => {
   randomCoffeeFound(ctx);
 });
-bot.command("initmeetups", initMeetups);
+bot.command("init_meetups", initMeetups);
+bot.command("remind_meetups", remindMeetups);
 
 // bot actions
 bot.action(ACTIONS.CREATE_PROFILE, createProfileAction);
@@ -90,6 +93,11 @@ bot.action(
 bot.action(/meetup_watch-partner_(.+)/, async (ctx, next) => {
   await ctx.answerCbQuery();
   await showPartnerProfile(ctx, +ctx.match[1]);
+});
+bot.action(/meetup_cancel_(.+)/, async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.editMessageReplyMarkup();
+  await cancelMeeting(ctx, ctx.match[1]);
 });
 bot.action(/.+/, async (ctx) => {
   await ctx.deleteMessage();

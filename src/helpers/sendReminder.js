@@ -1,23 +1,16 @@
-import * as dotenv from "dotenv";
-dotenv.config();
 import { Markup } from "telegraf";
 
-const randomCoffeeFound = async (ctx, id, user, meetingId) => {
-  const { tid, username } = user;
+const sendReminder = async (ctx, tid1, tid2, meetingId) => {
   await ctx.telegram.sendMessage(
-    id,
-    `Мы нашли тебе коллегу для встречи - @${username}
-Постарайся провести встречу в течение одной недели.
-Провели встречу – проинформируй об успешности встречи по кнопке снизу
-Не сможешь провести встречу – отмени ее также по кнопке снизу
-  `,
+    tid1,
+    "Привет! Сегодня среда, а ты ещё не провёл встречу?\n\nЕсть варианты:\n- встреча прошла, но ты забыл проинформировать нас - сделай это сейчас по кнопке снизу\n- встречу не проводлили - спишись с коллегой, у тебя есть ещё 3 дня!",
     {
       reply_markup: {
         inline_keyboard: [
           [
             Markup.button.callback(
               "Посмотреть профиль партнера 📄",
-              `meetup_watch-partner_${tid}`
+              `meetup_watch-partner_${tid2}`
             ),
           ],
           [
@@ -38,4 +31,4 @@ const randomCoffeeFound = async (ctx, id, user, meetingId) => {
   );
 };
 
-export default randomCoffeeFound;
+export default sendReminder;

@@ -18,6 +18,7 @@ const MeetingSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
