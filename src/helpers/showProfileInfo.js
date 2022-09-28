@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import logError from "./logError.js";
 import showMainButtons from "./showMainButtons.js";
 
 const showProfileInfo = async (ctx) => {
@@ -18,7 +19,7 @@ const showProfileInfo = async (ctx) => {
       await ctx.replyWithMarkdownV2(text);
     }
   } catch (error) {
-    console.log(error);
+    logError(error);
     await ctx.reply("Произошла ошибка при загрузке данных пользователя");
     await showMainButtons(ctx);
   }

@@ -1,6 +1,7 @@
 import { Scenes, Composer, Markup } from "telegraf";
 import SCENES from "./scenesList.js";
 import User from "../models/User.js";
+import logError from "../helpers/logError.js";
 
 const handleEdit = new Composer();
 handleEdit.on("text", async (ctx) => {
@@ -17,7 +18,7 @@ handleEdit.on("text", async (ctx) => {
     );
     await ctx.reply("Данные изменены!");
   } catch (error) {
-    console.log(error);
+    logError(error);
     await ctx.reply("Произошла ошибка при обновлении данных.");
   }
   await ctx.scene.leave();

@@ -6,6 +6,7 @@ import shuffle from "lodash.shuffle";
 import chunk from "lodash.chunk";
 import randomCoffeeFound from "../helpers/randomCoffeeFound.js";
 import { MEETING_STATUSES } from "../constants.js";
+import logError from "../helpers/logError.js";
 
 const initMeetups = async (ctx) => {
   if (ctx.chat.id === +process.env.ADMIN_ID) {
@@ -36,7 +37,7 @@ const initMeetups = async (ctx) => {
             meeting._id.toString()
           );
         } catch (error) {
-          console.log(error);
+          logError(error);
         }
       } else {
         // TODO: сообщить о том, что не нашли пару

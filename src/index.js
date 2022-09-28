@@ -28,6 +28,7 @@ import remindMeetups from "./commands/remindMeetups.js";
 import askAboutFutureMeetups from "./commands/askAboutFutureMeetups.js";
 
 // scenes
+import SCENES from "./scenes/scenesList.js";
 import createProfileScene from "./scenes/createProfileScene.js";
 import viewProfileScene from "./scenes/viewProfileScene.js";
 import editProfileScene from "./scenes/editProfileScene.js";
@@ -53,7 +54,7 @@ import randomCoffeeFound from "./helpers/randomCoffeeFound.js";
 import showPartnerProfile from "./helpers/showPartnerProfile.js";
 import cancelMeeting from "./helpers/cancelMeeting.js";
 import handleRegister from "./helpers/handleRegister.js";
-import SCENES from "./scenes/scenesList.js";
+import logError from "./helpers/logError.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
@@ -129,4 +130,4 @@ bot.action(/.+/, async (ctx) => {
 bot
   .launch()
   .then(() => console.log("BOT SUCCESSFULLY STARTED", new Date()))
-  .catch((err) => console.log(err));
+  .catch((err) => logError(err));

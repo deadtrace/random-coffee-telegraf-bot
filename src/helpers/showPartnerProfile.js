@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import logError from "./logError.js";
 
 const showPartnerProfile = async (ctx, tid) => {
   try {
@@ -16,7 +17,7 @@ const showPartnerProfile = async (ctx, tid) => {
       await ctx.reply(text);
     }
   } catch (error) {
-    console.log(error);
+    logError(error);
     await ctx.reply(
       "Произошла ошибка при загрузке данных партнера. Попробуйте ещё раз позднее."
     );

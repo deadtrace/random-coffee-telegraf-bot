@@ -5,6 +5,7 @@ import Feedback from "../models/Feedback.js";
 import Meeting from "../models/Meeting.js";
 import User from "../models/User.js";
 import { MEETING_STATUSES } from "../constants.js";
+import logError from "../helpers/logError.js";
 
 const feedback = new Composer();
 feedback.on("text", async (ctx) => {
@@ -39,7 +40,7 @@ feedback.on("text", async (ctx) => {
   try {
     await User.findOneAndUpdate({ tid: ctx.chat.id }, { registered: true });
   } catch (error) {
-    console.log(error);
+    logError(error);
   }
 
   await showMainButtons(
@@ -62,14 +63,14 @@ feedback.action("without-feedback", async (ctx) => {
         await meeting.save();
       }
     } catch (error) {
-      console.log(error);
+      logError(error);
     }
   }
 
   try {
     await User.findOneAndUpdate({ tid: ctx.chat.id }, { registered: true });
   } catch (error) {
-    console.log(error);
+    logError(error);
   }
 
   await showMainButtons(

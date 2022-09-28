@@ -4,6 +4,7 @@ import showProfileInfo from "../helpers/showProfileInfo.js";
 import showMainButtons from "../helpers/showMainButtons.js";
 import User from "../models/User.js";
 import startCommand from "../commands/start.js";
+import logError from "../helpers/logError.js";
 
 const name = new Composer();
 name.on("text", async (ctx) => {
@@ -67,7 +68,7 @@ const photoStageHandler = async (ctx) => {
   } catch (error) {
     await ctx.reply("К сожалению, сохранение данных прошло неуспешно.");
     await startCommand(ctx);
-    console.log(error);
+    logError(error);
   }
   return ctx.scene.leave();
 };

@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import logError from "./logError.js";
 import showMainButtons from "./showMainButtons.js";
 
 const handleRegister = async (ctx, registered) => {
@@ -11,7 +12,7 @@ const handleRegister = async (ctx, registered) => {
       await showMainButtons(ctx);
     }
   } catch (error) {
-    console.log(error);
+    logError(error);
   }
 };
 

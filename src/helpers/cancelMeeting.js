@@ -1,5 +1,6 @@
 import { MEETING_STATUSES } from "../constants.js";
 import Meeting from "../models/Meeting.js";
+import logError from "./logError.js";
 
 const cancelMeeting = async (ctx, meeetingId) => {
   try {
@@ -24,8 +25,7 @@ const cancelMeeting = async (ctx, meeetingId) => {
       );
     }
   } catch (error) {
-    console.log(error.name);
-    console.log(error.message);
+    logError(error);
   }
 };
 

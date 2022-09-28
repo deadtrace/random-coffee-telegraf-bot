@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import { Markup } from "telegraf";
+import logError from "../helpers/logError.js";
 
 const askAboutFutureMeetups = async (ctx) => {
   try {
@@ -20,7 +21,7 @@ const askAboutFutureMeetups = async (ctx) => {
       );
     }
   } catch (error) {
-    console.log(error);
+    logError(error);
   }
 };
 

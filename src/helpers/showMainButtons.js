@@ -1,6 +1,7 @@
 import { Markup } from "telegraf";
 import ACTIONS from "../actions/actionsList.js";
 import User from "../models/User.js";
+import logError from "./logError.js";
 
 const showMainButtons = async (ctx, mainText) => {
   try {
@@ -43,7 +44,7 @@ const showMainButtons = async (ctx, mainText) => {
     await ctx.reply(
       "Произошла ошибка при загрузке пользовательских данных. Попробуйте ещё раз открыть меню с помощью /menu"
     );
-    console.log(error);
+    logError(error);
   }
 };
 
