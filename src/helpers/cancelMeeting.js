@@ -9,6 +9,9 @@ const cancelMeeting = async (ctx, meeetingId) => {
       if (meeting.status === MEETING_STATUSES.CANCELED) {
         return await ctx.reply("Встреча уже была ранее отменена.");
       }
+      if (meeting.status === MEETING_STATUSES.MET) {
+        return await ctx.reply("Ваш коллега сообщил, что встреча состоялась.");
+      }
       meeting.status = MEETING_STATUSES.CANCELED;
       await meeting.save();
 

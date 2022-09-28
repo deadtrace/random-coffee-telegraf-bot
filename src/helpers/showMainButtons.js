@@ -2,7 +2,7 @@ import { Markup } from "telegraf";
 import ACTIONS from "../actions/actionsList.js";
 import User from "../models/User.js";
 
-const showMainButtons = async (ctx) => {
+const showMainButtons = async (ctx, mainText) => {
   try {
     const { registered } = await User.findOne(
       { tid: ctx.chat.id },
@@ -13,7 +13,7 @@ const showMainButtons = async (ctx) => {
       ? "Ты зарегистрирован на встречу. Ожидай приглашения."
       : "Сейчас ты не активен. Для поиска коллеги нажми «Зарегистрироваться на встречу».";
 
-    ctx.reply(text, {
+    ctx.reply(mainText || text, {
       reply_markup: {
         inline_keyboard: [
           registered

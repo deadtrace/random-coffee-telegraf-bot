@@ -36,6 +36,7 @@ import editProfileNameScene from "./scenes/editProfileNameScene.js";
 import editProfileWorkspaceScene from "./scenes/editProfileWorkspaceScene.js";
 import editProfileHobbiesScene from "./scenes/editProfileHobbiesScene.js";
 import editProfilePhotoScene from "./scenes/editProfilePhotoScene.js";
+import giveMeetupFeedbackScene from "./scenes/giveMeetupFeedbackScene.js";
 
 // actions
 import ACTIONS from "./actions/actionsList.js";
@@ -52,6 +53,7 @@ import randomCoffeeFound from "./helpers/randomCoffeeFound.js";
 import showPartnerProfile from "./helpers/showPartnerProfile.js";
 import cancelMeeting from "./helpers/cancelMeeting.js";
 import handleRegister from "./helpers/handleRegister.js";
+import SCENES from "./scenes/scenesList.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
@@ -65,6 +67,7 @@ const stage = new Scenes.Stage([
   editProfileWorkspaceScene,
   editProfileHobbiesScene,
   editProfilePhotoScene,
+  giveMeetupFeedbackScene,
 ]);
 bot.use(stage.middleware());
 
@@ -104,6 +107,12 @@ bot.action(/register_(.+)/, async (ctx) => {
 bot.action(/meetup_watch-partner_(.+)/, async (ctx, next) => {
   await ctx.answerCbQuery();
   await showPartnerProfile(ctx, +ctx.match[1]);
+});
+bot.action(/meetup_happened_(.+)/, async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.editMessageReplyMarkup();
+  ctx.session.meetupId = ctx.match[1];
+  await ctx.scene.enter(SCENES.GIVE_MEETUP_FEEDBACK);
 });
 bot.action(/meetup_cancel_(.+)/, async (ctx) => {
   await ctx.answerCbQuery();

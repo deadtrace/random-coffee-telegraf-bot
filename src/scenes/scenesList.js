@@ -7,6 +7,7 @@ const SCENES = {
   EDIT_PROFILE_HOBBIES: "edit-profile-hobbies-scene",
   EDIT_PROFILE_PHOTO: "edit-profile-photo-scene",
   GIVE_BOT_FEEDBACK: "give-bot-feedback-scene",
+  GIVE_MEETUP_FEEDBACK: "give-meetup-feedback-scene",
 };
 
 export default SCENES;
