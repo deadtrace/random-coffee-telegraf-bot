@@ -37,10 +37,18 @@ const initMeetups = async (ctx) => {
             meeting._id.toString()
           );
         } catch (error) {
-          logError(error);
+          logError(error, ctx);
         }
       } else {
-        // TODO: сообщить о том, что не нашли пару
+        const [user] = pair;
+        try {
+          await ctx.telegram.sendMessage(
+            user.tid,
+            "К сожалению, на этой неделе для Вас не нашлось коллеги. Ждите приглашения на следующей неделе!"
+          );
+        } catch (error) {
+          logError(error, ctx);
+        }
       }
     }
   } else {

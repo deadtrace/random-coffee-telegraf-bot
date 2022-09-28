@@ -17,7 +17,7 @@ const showPartnerProfile = async (ctx, tid) => {
       await ctx.reply(text);
     }
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
     await ctx.reply(
       "Произошла ошибка при загрузке данных партнера. Попробуйте ещё раз позднее."
     );

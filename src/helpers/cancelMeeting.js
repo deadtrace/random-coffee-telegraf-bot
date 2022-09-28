@@ -25,7 +25,7 @@ const cancelMeeting = async (ctx, meeetingId) => {
       );
     }
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
   }
 };
 

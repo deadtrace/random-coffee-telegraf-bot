@@ -19,7 +19,7 @@ const showProfileInfo = async (ctx) => {
       await ctx.replyWithMarkdownV2(text);
     }
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
     await ctx.reply("Произошла ошибка при загрузке данных пользователя");
     await showMainButtons(ctx);
   }

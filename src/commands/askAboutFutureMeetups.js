@@ -21,7 +21,7 @@ const askAboutFutureMeetups = async (ctx) => {
       );
     }
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
   }
 };
 

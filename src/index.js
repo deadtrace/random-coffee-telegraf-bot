@@ -74,16 +74,14 @@ bot.use(stage.middleware());
 
 // bot reactions
 bot.start(startCommand);
-// FOR DEVELOP PURPOSES ONLY. TODO: DELETE
 bot.command("profile", async (ctx) => {
   showProfileInfo(ctx);
 });
 bot.command("menu", async (ctx) => {
   showMainButtons(ctx);
 });
-bot.command("register", async (ctx) => {
-  randomCoffeeFound(ctx);
-});
+
+// admin commands
 bot.command("init_meetups", initMeetups);
 bot.command("remind_meetups", remindMeetups);
 bot.command("ask_about_future_meetups", askAboutFutureMeetups);

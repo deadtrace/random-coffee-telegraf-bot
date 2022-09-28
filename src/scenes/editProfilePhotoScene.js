@@ -21,7 +21,7 @@ handleEdit.on("photo", async (ctx) => {
     );
     await ctx.reply("Данные изменены!");
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
     await ctx.reply("Произошла ошибка при обновлении данных.");
   }
   await ctx.scene.leave();

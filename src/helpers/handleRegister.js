@@ -12,7 +12,7 @@ const handleRegister = async (ctx, registered) => {
       await showMainButtons(ctx);
     }
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
   }
 };
 

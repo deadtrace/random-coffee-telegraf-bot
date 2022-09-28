@@ -44,7 +44,7 @@ const showMainButtons = async (ctx, mainText) => {
     await ctx.reply(
       "Произошла ошибка при загрузке пользовательских данных. Попробуйте ещё раз открыть меню с помощью /menu"
     );
-    logError(error);
+    logError(error, ctx);
   }
 };
 

@@ -40,7 +40,7 @@ feedback.on("text", async (ctx) => {
   try {
     await User.findOneAndUpdate({ tid: ctx.chat.id }, { registered: true });
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
   }
 
   await showMainButtons(
@@ -63,14 +63,14 @@ feedback.action("without-feedback", async (ctx) => {
         await meeting.save();
       }
     } catch (error) {
-      logError(error);
+      logError(error, ctx);
     }
   }
 
   try {
     await User.findOneAndUpdate({ tid: ctx.chat.id }, { registered: true });
   } catch (error) {
-    logError(error);
+    logError(error, ctx);
   }
 
   await showMainButtons(

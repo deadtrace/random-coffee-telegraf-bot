@@ -68,7 +68,7 @@ const photoStageHandler = async (ctx) => {
   } catch (error) {
     await ctx.reply("К сожалению, сохранение данных прошло неуспешно.");
     await startCommand(ctx);
-    logError(error);
+    logError(error, ctx);
   }
   return ctx.scene.leave();
 };
