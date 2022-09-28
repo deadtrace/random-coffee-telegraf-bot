@@ -50,7 +50,6 @@ import unegisterFromRandomCoffeeAction from "./actions/unregisterFromRandomCoffe
 //helpers
 import showProfileInfo from "./helpers/showProfileInfo.js";
 import showMainButtons from "./helpers/showMainButtons.js";
-import randomCoffeeFound from "./helpers/randomCoffeeFound.js";
 import showPartnerProfile from "./helpers/showPartnerProfile.js";
 import cancelMeeting from "./helpers/cancelMeeting.js";
 import handleRegister from "./helpers/handleRegister.js";
