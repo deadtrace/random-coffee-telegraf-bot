@@ -5,12 +5,15 @@ import Feedback from "../models/Feedback.js";
 
 const feedback = new Composer();
 feedback.on("text", async (ctx) => {
-  await ctx.telegram.editMessageReplyMarkup(
-    ctx.chat.id,
-    ctx.session.lastBotMessage,
-    "",
-    {}
-  );
+  const { lastBotMessage } = ctx.session;
+  if (lastBotMessage) {
+    await ctx.telegram.editMessageReplyMarkup(
+      ctx.chat.id,
+      lastBotMessage,
+      "",
+      {}
+    );
+  }
 
   const formattedText = `Отзыв о работе бота от @${ctx.chat.username}:\n${ctx.message.text}`;
   const { FEEDBACK_CHANNEL_ID } = process.env;

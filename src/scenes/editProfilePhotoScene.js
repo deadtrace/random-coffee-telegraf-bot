@@ -13,12 +13,15 @@ handleEdit.on("photo", async (ctx) => {
         username: ctx.chat.username ?? null,
       }
     );
-    await ctx.telegram.editMessageReplyMarkup(
-      ctx.chat.id,
-      ctx.session.lastBotMessage,
-      "",
-      {}
-    );
+    const { lastBotMessage } = ctx.session;
+    if (lastBotMessage) {
+      await ctx.telegram.editMessageReplyMarkup(
+        ctx.chat.id,
+        lastBotMessage,
+        "",
+        {}
+      );
+    }
     await ctx.reply("Данные изменены!");
   } catch (error) {
     logError(error, ctx);

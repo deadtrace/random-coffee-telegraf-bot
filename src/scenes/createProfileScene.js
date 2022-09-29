@@ -36,12 +36,10 @@ const hobbiesStageHandler = async (ctx) => {
 };
 hobbies.on("text", async (ctx) => {
   ctx.wizard.state.data.hobbies = ctx.message.text;
-  ctx.telegram.editMessageReplyMarkup(
-    ctx.chat.id,
-    ctx.session.lastBotMessage,
-    "",
-    {}
-  );
+  const { lastBotMessage } = ctx.session;
+  if (lastBotMessage) {
+    ctx.telegram.editMessageReplyMarkup(ctx.chat.id, lastBotMessage, "", {});
+  }
   await hobbiesStageHandler(ctx);
 });
 hobbies.action("next", async (ctx) => {
@@ -74,6 +72,10 @@ const photoStageHandler = async (ctx) => {
 };
 photo.on("photo", async (ctx) => {
   ctx.wizard.state.data.photo_id = ctx.message.photo[0].file_id;
+  const { lastBotMessage } = ctx.session;
+  if (lastBotMessage) {
+    ctx.telegram.editMessageReplyMarkup(ctx.chat.id, lastBotMessage, "", {});
+  }
   await photoStageHandler(ctx);
 });
 photo.action("next", async (ctx) => {

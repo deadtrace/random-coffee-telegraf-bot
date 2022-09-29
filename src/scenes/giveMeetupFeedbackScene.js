@@ -9,7 +9,7 @@ import logError from "../helpers/logError.js";
 
 const feedback = new Composer();
 feedback.on("text", async (ctx) => {
-  const { lastBotMessage } = ctx.session;
+  const { lastBotMessage, meetupId } = ctx.session;
   if (lastBotMessage) {
     await ctx.telegram.editMessageReplyMarkup(
       ctx.chat.id,
@@ -17,6 +17,21 @@ feedback.on("text", async (ctx) => {
       "",
       {}
     );
+  }
+
+  if (meetupId) {
+    try {
+      const meeting = await Meeting.findById(meetupId);
+      if (
+        meeting.status === MEETING_STATUSES.NEW ||
+        meeting.status === MEETING_STATUSES.CANCELED
+      ) {
+        meeting.status = MEETING_STATUSES.MET;
+        await meeting.save();
+      }
+    } catch (error) {
+      logError(error, ctx);
+    }
   }
 
   const formattedText = `Отзыв о встрече от @${ctx.chat.username}:\n${ctx.message.text}`;
