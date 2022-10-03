@@ -7,9 +7,13 @@ import chunk from "lodash.chunk";
 import randomCoffeeFound from "../helpers/randomCoffeeFound.js";
 import { MEETING_STATUSES } from "../constants.js";
 import logError from "../helpers/logError.js";
+import prepareStats from "../helpers/prepareStats.js";
 
 const initMeetups = async (ctx) => {
   if (ctx.chat.id === +process.env.ADMIN_ID) {
+    await prepareStats(ctx);
+    await Meeting.deleteMany({});
+
     const registeredUsers = await User.find({ registered: true }).exec();
     const pairs = chunk(shuffle(registeredUsers), 2);
 
@@ -17,7 +21,6 @@ const initMeetups = async (ctx) => {
       if (pair.length === 2) {
         const [user1, user2] = pair;
         try {
-          await Meeting.deleteMany({});
           const meeting = await Meeting.create({
             tid1: user1.tid,
             tid2: user2.tid,
