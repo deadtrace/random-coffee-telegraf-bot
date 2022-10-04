@@ -19,10 +19,18 @@ const cancelMeeting = async (ctx, meeetingId) => {
       const partnerId =
         meeting.tid1 === ctx.chat.id ? meeting.tid2 : meeting.tid1;
       await ctx.reply("Встреча успешно отменена!");
-      await ctx.telegram.sendMessage(
-        partnerId,
-        "К сожалению, коллега отменил встречу на этой неделе."
-      );
+      try {
+        await ctx.telegram.sendMessage(
+          partnerId,
+          "К сожалению, коллега отменил встречу на этой неделе."
+        );
+      } catch (error) {
+        if (error.response?.error_code === 403) {
+          await User.findOneAndDelete({ tid: partnerId });
+        } else {
+          throw error;
+        }
+      }
     }
   } catch (error) {
     logError(error, ctx);

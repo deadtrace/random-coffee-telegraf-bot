@@ -50,7 +50,11 @@ const initMeetups = async (ctx) => {
             "К сожалению, на этой неделе для Вас не нашлось коллеги. Ждите приглашения на следующей неделе!"
           );
         } catch (error) {
-          logError(error, ctx);
+          if (error.response?.error_code === 403) {
+            await User.findOneAndDelete({ tid: user.tid });
+          } else {
+            logError(error, ctx);
+          }
         }
       }
     }
