@@ -11,7 +11,7 @@ const { BOT_TOKEN, DB_USERNAME, DB_PASSWORD, DB_LINK, DB_COLLECTION, STAND } =
 
 mongoose
   .connect(
-    `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_LINK}/${DB_COLLECTION}`
+    `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_LINK}/${DB_COLLECTION}?authSource=admin`
   )
   .then(() => {
     console.log("DB CONNECTED");
