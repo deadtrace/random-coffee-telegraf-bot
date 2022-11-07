@@ -5,31 +5,51 @@ import showMainButtons from "../helpers/showMainButtons.js";
 const handleEdit = new Composer();
 handleEdit.action("edit-name", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.EDIT_PROFILE_NAME);
 });
 handleEdit.action("edit-workspace", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.EDIT_PROFILE_WORKSPACE);
 });
 handleEdit.action("edit-hobbies", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.EDIT_PROFILE_HOBBIES);
 });
 handleEdit.action("edit-photo", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.EDIT_PROFILE_PHOTO);
 });
 handleEdit.action("back", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.VIEW_PROFILE);
 });

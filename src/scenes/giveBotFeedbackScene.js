@@ -36,7 +36,11 @@ feedback.on("text", async (ctx) => {
   return ctx.scene.leave();
 });
 feedback.action("back", async (ctx) => {
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await showMainButtons(ctx);
   return ctx.scene.leave();
 });

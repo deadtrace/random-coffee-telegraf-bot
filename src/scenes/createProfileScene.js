@@ -43,7 +43,11 @@ hobbies.on("text", async (ctx) => {
   await hobbiesStageHandler(ctx);
 });
 hobbies.action("next", async (ctx) => {
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await hobbiesStageHandler(ctx);
 });
 
@@ -79,7 +83,11 @@ photo.on("photo", async (ctx) => {
   await photoStageHandler(ctx);
 });
 photo.action("next", async (ctx) => {
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await photoStageHandler(ctx);
 });
 

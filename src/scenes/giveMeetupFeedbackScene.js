@@ -65,7 +65,11 @@ feedback.on("text", async (ctx) => {
   return ctx.scene.leave();
 });
 feedback.action("without-feedback", async (ctx) => {
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   const { meetupId } = ctx.session;
   if (meetupId) {
     try {

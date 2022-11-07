@@ -6,20 +6,32 @@ import showProfileInfo from "../helpers/showProfileInfo.js";
 const profileActions = new Composer();
 profileActions.action("back", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await showMainButtons(ctx);
   return ctx.scene.leave();
 });
 profileActions.action("watch", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await showProfileInfo(ctx);
   await showMainButtons(ctx);
   return ctx.scene.leave();
 });
 profileActions.action("edit", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   ctx.scene.enter(SCENES.EDIT_PROFILE);
 });

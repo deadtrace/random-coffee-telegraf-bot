@@ -119,7 +119,11 @@ bot.action(/meetup_cancel_(.+)/, async (ctx) => {
 });
 
 bot.action(/.+/, async (ctx) => {
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   return ctx.answerCbQuery();
 });
 

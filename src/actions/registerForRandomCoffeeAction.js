@@ -3,7 +3,11 @@ import User from "../models/User.js";
 
 const registerForRandomCoffeeAction = async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   try {
     await User.updateOne({ tid: ctx.chat.id }, { registered: true });
   } catch (error) {

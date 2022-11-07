@@ -29,7 +29,11 @@ handleEdit.on("text", async (ctx) => {
 });
 handleEdit.action("back", async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.deleteMessage();
+  try {
+    await ctx.deleteMessage();
+  } catch (error) {
+    console.error(error);
+  }
   await ctx.scene.leave();
   return ctx.scene.enter(SCENES.EDIT_PROFILE);
 });
