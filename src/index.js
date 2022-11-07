@@ -6,7 +6,7 @@ import TSL from "telegraf-session-local";
 import mongoose from "mongoose";
 
 // environment variables
-const { BOT_TOKEN, DB_USERNAME, DB_PASSWORD, DB_LINK, DB_COLLECTION } =
+const { BOT_TOKEN, DB_USERNAME, DB_PASSWORD, DB_LINK, DB_COLLECTION, STAND } =
   process.env;
 
 mongoose
@@ -57,7 +57,7 @@ import logError from "./helpers/logError.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
-bot.use(new TSL({ database: "data/session.json" }).middleware());
+bot.use(new TSL({ database: `data/session-${STAND}.json` }).middleware());
 const stage = new Scenes.Stage([
   createProfileScene,
   giveBotFeedbackScene,
