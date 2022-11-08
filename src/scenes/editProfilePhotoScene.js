@@ -45,7 +45,7 @@ const editProfilePhotoScene = new Scenes.WizardScene(
   SCENES.EDIT_PROFILE_PHOTO,
   async (ctx) => {
     const { message_id } = await ctx.reply(
-      "Прикрепите новую фотографию",
+      "Прикрепи новую фотографию",
       Markup.inlineKeyboard([Markup.button.callback("Назад 🔙", "back")])
     );
     ctx.session.lastBotMessage = message_id;

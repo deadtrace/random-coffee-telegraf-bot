@@ -8,6 +8,7 @@ import randomCoffeeFound from "../helpers/randomCoffeeFound.js";
 import { MEETING_STATUSES } from "../constants.js";
 import logError from "../helpers/logError.js";
 import prepareStats from "../helpers/prepareStats.js";
+import { TEXTS } from "../texts.js";
 
 const initMeetups = async (ctx) => {
   if (ctx.chat.id === +process.env.ADMIN_ID) {
@@ -47,7 +48,7 @@ const initMeetups = async (ctx) => {
         try {
           await ctx.telegram.sendMessage(
             user.tid,
-            "К сожалению, на этой неделе для Вас не нашлось коллеги. Ждите приглашения на следующей неделе!"
+            TEXTS.NO_COLLEAGUE_FOR_THIS_WEEK
           );
         } catch (error) {
           if (error.response?.error_code === 403) {
@@ -59,7 +60,7 @@ const initMeetups = async (ctx) => {
       }
     }
   } else {
-    await ctx.reply("Вам не доступна данная команда");
+    await ctx.reply(TEXTS.NOT_ALLOWED_TO_USE_THIS_COMMAND);
   }
 };
 

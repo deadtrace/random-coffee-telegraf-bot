@@ -10,7 +10,7 @@ const name = new Composer();
 name.on("text", async (ctx) => {
   ctx.wizard.state.data = {};
   ctx.wizard.state.data.name = ctx.message.text;
-  await ctx.reply("Расскажите о Вашей команде, роли и задачах:");
+  await ctx.reply("Расскажи своих команде, роли и задачах:");
   return ctx.wizard.next();
 });
 
@@ -18,7 +18,7 @@ const workspace = new Composer();
 workspace.on("text", async (ctx) => {
   ctx.wizard.state.data.workspace = ctx.message.text;
   const { message_id } = await ctx.reply(
-    "Укажите Ваши хобби и увлечения (по желанию):",
+    "Укажи свои хобби и увлечения (по желанию):",
     Markup.inlineKeyboard([Markup.button.callback("Пропустить", "next")])
   );
   ctx.session.lastBotMessage = message_id;
@@ -28,7 +28,7 @@ workspace.on("text", async (ctx) => {
 const hobbies = new Composer();
 const hobbiesStageHandler = async (ctx) => {
   const { message_id } = await ctx.reply(
-    "Прикрепите Вашу фотографию (по желанию)",
+    "Прикрепи свою фотографию (по желанию)",
     Markup.inlineKeyboard([Markup.button.callback("Пропустить", "next")])
   );
   ctx.session.lastBotMessage = message_id;
@@ -94,7 +94,7 @@ photo.action("next", async (ctx) => {
 const createProfileScene = new Scenes.WizardScene(
   SCENES.CREATE_PROFILE,
   async (ctx) => {
-    await ctx.reply("Напишите Ваши имя и фамилию");
+    await ctx.reply("Напиши свои имя и фамилию");
     return ctx.wizard.next();
   },
   name,

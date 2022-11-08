@@ -6,12 +6,7 @@ const startCommand = async (ctx) =>
   ctx.reply(TEXTS.START, {
     reply_markup: {
       inline_keyboard: [
-        [
-          Markup.button.callback(
-            "Заполнить профиль 📝",
-            ACTIONS.CREATE_PROFILE
-          ),
-        ],
+        [Markup.button.callback(TEXTS.FILL_PROFILE, ACTIONS.CREATE_PROFILE)],
       ],
     },
   });

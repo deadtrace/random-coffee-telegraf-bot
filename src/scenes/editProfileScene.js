@@ -57,7 +57,7 @@ handleEdit.action("back", async (ctx) => {
 const editProfileScene = new Scenes.WizardScene(
   SCENES.EDIT_PROFILE,
   async (ctx) => {
-    const { message_id } = await ctx.reply("Выберите опцию:", {
+    const { message_id } = await ctx.reply("Выбери опцию:", {
       reply_markup: {
         inline_keyboard: [
           [Markup.button.callback("Изменить имя 📝", "edit-name")],

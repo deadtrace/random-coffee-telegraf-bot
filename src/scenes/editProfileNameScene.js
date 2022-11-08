@@ -42,7 +42,7 @@ const editProfileNameScene = new Scenes.WizardScene(
   SCENES.EDIT_PROFILE_NAME,
   async (ctx) => {
     const { message_id } = await ctx.reply(
-      "Введите новое имя",
+      "Введи новое имя",
       Markup.inlineKeyboard([Markup.button.callback("Назад 🔙", "back")])
     );
     ctx.session.lastBotMessage = message_id;

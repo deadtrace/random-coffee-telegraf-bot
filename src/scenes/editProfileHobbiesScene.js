@@ -42,7 +42,7 @@ const editProfileHobbiesScene = new Scenes.WizardScene(
   SCENES.EDIT_PROFILE_HOBBIES,
   async (ctx) => {
     const { message_id } = await ctx.reply(
-      "Укажите Ваши хобби и увлечения:",
+      "Укажи свои хобби и увлечения:",
       Markup.inlineKeyboard([Markup.button.callback("Назад 🔙", "back")])
     );
     ctx.session.lastBotMessage = message_id;

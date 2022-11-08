@@ -2,16 +2,14 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { Markup } from "telegraf";
 import User from "../models/User.js";
+import logError from "./logError.js";
 
 const randomCoffeeFound = async (ctx, id, user, meetingId) => {
   const { tid, username } = user;
   try {
     await ctx.telegram.sendMessage(
       id,
-      `Мы нашли тебе коллегу для встречи - @${username}
-Постарайся провести встречу в течение одной недели.
-Провели встречу – проинформируй об успешности встречи по кнопке снизу
-Не сможешь провести встречу – отмени ее также по кнопке снизу`,
+      `Мы нашли тебе коллегу для встречи - @${username}\nПостарайся провести встречу в течение одной недели.\nПровели встречу – проинформируй об успешности встречи по кнопке снизу\nНе сможешь провести встречу – отмени ее также по кнопке снизу`,
       {
         reply_markup: {
           inline_keyboard: [
@@ -41,7 +39,7 @@ const randomCoffeeFound = async (ctx, id, user, meetingId) => {
     if (error.response?.error_code === 403) {
       await User.findOneAndDelete({ tid: id });
     } else {
-      throw error;
+      logError(error, ctx);
     }
   }
 };

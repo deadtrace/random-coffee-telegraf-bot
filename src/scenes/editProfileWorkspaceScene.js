@@ -42,7 +42,7 @@ const editProfileWorkspaceScene = new Scenes.WizardScene(
   SCENES.EDIT_PROFILE_WORKSPACE,
   async (ctx) => {
     const { message_id } = await ctx.reply(
-      "Расскажите о Вашей команде, роли и задачах:",
+      "Расскажи о своих команде, роли и задачах:",
       Markup.inlineKeyboard([Markup.button.callback("Назад 🔙", "back")])
     );
     ctx.session.lastBotMessage = message_id;

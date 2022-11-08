@@ -1,5 +1,6 @@
 import showMainButtons from "../helpers/showMainButtons.js";
 import User from "../models/User.js";
+import { TEXTS } from "../texts.js";
 
 const registerForRandomCoffeeAction = async (ctx) => {
   await ctx.answerCbQuery();
@@ -11,7 +12,7 @@ const registerForRandomCoffeeAction = async (ctx) => {
   try {
     await User.updateOne({ tid: ctx.chat.id }, { registered: true });
   } catch (error) {
-    await ctx.reply("Произошла ошибка при регистрации на встречу");
+    await ctx.reply(TEXTS.REGISTRATION_ERROR);
   }
   await showMainButtons(ctx);
 };

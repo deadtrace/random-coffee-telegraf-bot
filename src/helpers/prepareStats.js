@@ -19,7 +19,7 @@ const prepareStats = async (ctx) => {
     const usersTotal = await User.count();
     const usersRegistered = await User.count({ registered: true });
 
-    const text = `На прошедшей неделе было запланировано ${meetingsTotalCount} встреч:\n- о ${meetingsNewCount} встречах бот не получил никакой информации;\n- ${meetingsMetCount} встреч успешно состоялись;\n- ${meetingsCanceledCount} встреч были отменены;\n\nЗа всё время в боте зарегистрировались ${usersTotal} пользователей.\nНа этой неделе зарегистрированы на встречу ${usersRegistered} пользователей.`;
+    const text = `На прошедшей неделе было запланировано ${meetingsTotalCount} встреч:\n- о ${meetingsNewCount} встречах бот не получил никакой информации;\n- ${meetingsMetCount} встреч успешно состоялись;\n- ${meetingsCanceledCount} встреч были отменены;\n\nВсего у бота ${usersTotal} пользователей.\nНа этой неделе зарегистрированы на встречу ${usersRegistered} пользователей.`;
 
     ctx.telegram.sendMessage(process.env.FEEDBACK_CHANNEL_ID, text);
   } catch (error) {

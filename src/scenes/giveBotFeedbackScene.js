@@ -28,7 +28,7 @@ feedback.on("text", async (ctx) => {
     await ctx.reply("Спасибо за обратную связь!");
   } catch (error) {
     await ctx.reply(
-      "Произошла ошибка при отправке обратной связи. Попробуйте ещё раз позднее."
+      "Произошла ошибка при отправке обратной связи. Попробуй ещё раз позднее."
     );
   }
 
@@ -49,7 +49,7 @@ const giveBotFeedbackScene = new Scenes.WizardScene(
   SCENES.GIVE_BOT_FEEDBACK,
   async (ctx) => {
     const { message_id } = await ctx.reply(
-      "Пожалуйста, поделитесь своими впечатлениями о работе нашего бота и проблемами, с которыми Вы столкнулись.",
+      "Пожалуйста, поделись своими впечатлениями о работе нашего бота и проблемами, с которыми ты столкнулся.",
       Markup.inlineKeyboard([Markup.button.callback("Назад", "back")])
     );
     ctx.session.lastBotMessage = message_id;

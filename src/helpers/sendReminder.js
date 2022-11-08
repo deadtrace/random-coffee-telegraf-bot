@@ -1,4 +1,5 @@
 import { Markup } from "telegraf";
+import logError from "./logError.js";
 
 const sendReminder = async (ctx, tid1, tid2, meetingId) => {
   try {
@@ -34,7 +35,7 @@ const sendReminder = async (ctx, tid1, tid2, meetingId) => {
     if (error.response?.error_code === 403) {
       await User.findOneAndDelete({ tid: id });
     } else {
-      throw error;
+      logError(error, ctx);
     }
   }
 };

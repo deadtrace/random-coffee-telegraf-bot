@@ -7,6 +7,7 @@ import chunk from "lodash.chunk";
 import randomCoffeeFound from "../helpers/randomCoffeeFound.js";
 import { MEETING_STATUSES } from "../constants.js";
 import sendReminder from "../helpers/sendReminder.js";
+import { TEXTS } from "../texts.js";
 
 const initMeetups = async (ctx) => {
   if (ctx.chat.id === +process.env.ADMIN_ID) {
@@ -19,7 +20,7 @@ const initMeetups = async (ctx) => {
       await sendReminder(ctx, tid2, tid1, _id.toString());
     }
   } else {
-    await ctx.reply("Вам не доступна данная команда");
+    await ctx.reply(TEXTS.NOT_ALLOWED_TO_USE_THIS_COMMAND);
   }
 };
 
