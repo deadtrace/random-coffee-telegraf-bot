@@ -9,6 +9,7 @@ import { MEETING_STATUSES } from "../constants.js";
 import logError from "../helpers/logError.js";
 import prepareStats from "../helpers/prepareStats.js";
 import { TEXTS } from "../texts.js";
+import ChatAdmin from "../models/ChatAdmin.js";
 
 const initMeetups = async (ctx) => {
   if (ctx.chat.id === +process.env.ADMIN_ID) {
@@ -44,18 +45,20 @@ const initMeetups = async (ctx) => {
           logError(error, ctx);
         }
       } else {
+        // ОБРАБОТКА СЛУЧАЯ НЕЧЁТНОГО ПОЛЬЗОВАТЕЛЯ, ЕМУ В КАЧЕСТВЕ ПАРЫ НЕОБХОДИМО ОПРЕДЕЛИТЬ ОДНОГО ИЗ АДМИНИСТРАТОРОВ
         const [user] = pair;
         try {
-          await ctx.telegram.sendMessage(
-            user.tid,
-            TEXTS.NO_COLLEAGUE_FOR_THIS_WEEK
-          );
+          const admins = await ChatAdmin.find().exec();
+          const admin = admins[Math.floor(Math.random() * admins.length)];
+          const meeting = await Meeting.create({
+            tid1: user.tid,
+            tid2: admin.tid,
+            status: MEETING_STATUSES.NEW,
+          });
+          await randomCoffeeFound(ctx, user.tid, admin, meeting._id.toString());
+          await randomCoffeeFound(ctx, admin.tid, user, meeting._id.toString());
         } catch (error) {
-          if (error.response?.error_code === 403) {
-            await User.findOneAndDelete({ tid: user.tid });
-          } else {
-            logError(error, ctx);
-          }
+          logError(error, ctx);
         }
       }
     }

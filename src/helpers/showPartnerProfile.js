@@ -5,7 +5,7 @@ const showPartnerProfile = async (ctx, tid) => {
   try {
     const user = await User.findOne({ tid }).exec();
     const { name, workspace, hobbies, photo_id, username } = user;
-    const text = `Профиль твоего партнера:\nИмя и фамилия:\n${name} @${username}\nКоманда, роль, задачи 👨🏻‍💻:\n${workspace}\n${
+    const text = `Профиль твоего собеседника:\nИмя и фамилия:\n${name} @${username}\nКоманда, роль, задачи 👨🏻‍💻:\n${workspace}\n${
       hobbies ? `Хобби, увлечения 🏂🏻:\n${hobbies}` : ""
     }`;
 

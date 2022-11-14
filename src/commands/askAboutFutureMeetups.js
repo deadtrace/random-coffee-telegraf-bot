@@ -28,7 +28,10 @@ const askAboutFutureMeetups = async (ctx) => {
           },
         });
       } catch (error) {
-        if (error.response?.error_code === 403) {
+        if (
+          error.response?.error_code === 403 ||
+          error.response?.error_code === 400
+        ) {
           await User.findOneAndDelete({ tid });
         } else {
           throw error;

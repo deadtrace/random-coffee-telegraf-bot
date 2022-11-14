@@ -26,7 +26,10 @@ const cancelMeeting = async (ctx, meeetingId) => {
           TEXTS.COLLEAGUE_CANCELED_MEETING
         );
       } catch (error) {
-        if (error.response?.error_code === 403) {
+        if (
+          error.response?.error_code === 403 ||
+          error.response?.error_code === 400
+        ) {
           await User.findOneAndDelete({ tid: partnerId });
         } else {
           logError(error, ctx);
