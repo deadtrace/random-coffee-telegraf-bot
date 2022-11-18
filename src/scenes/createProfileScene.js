@@ -10,7 +10,7 @@ const name = new Composer();
 name.on("text", async (ctx) => {
   ctx.wizard.state.data = {};
   ctx.wizard.state.data.name = ctx.message.text;
-  await ctx.reply("Расскажи своих команде, роли и задачах:");
+  await ctx.reply("Расскажи о своих команде, роли и задачах:");
   return ctx.wizard.next();
 });
 
