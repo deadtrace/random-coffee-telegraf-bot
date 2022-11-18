@@ -8,6 +8,8 @@ const parseForMarkdown = (str) =>
     .replace(/\</g, "\\<")
     .replace(/\>/g, "\\>")
     .replace(/\)/g, "\\)")
-    .replace(/\(/g, "\\(");
+    .replace(/\(/g, "\\(")
+    .replace(/\!/g, "\\!")
+    .replace(/\+/g, "\\+");
 
 export default parseForMarkdown;

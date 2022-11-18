@@ -23,8 +23,9 @@ const showProfileInfo = async (ctx) => {
     }
   } catch (error) {
     logError(error, ctx);
-    await ctx.reply("Произошла ошибка при загрузке данных пользователя");
-    await showMainButtons(ctx);
+    await ctx.reply(
+      "Произошла ошибка при отображении твоих данных. Пожалуйста, напиши о возникшей проблеме в фидбек о боте. Разработчики обязательно всё быстро исправят)"
+    );
   }
 };
 
