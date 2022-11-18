@@ -8,12 +8,18 @@ const showPartnerProfile = async (ctx, tid) => {
   try {
     const user = await User.findOne({ tid }).exec();
     if (!user) throw new Error(user_not_exist);
-    const { name, workspace, hobbies, photo_id, username } = user;
-    const text = parseForMarkdown(
-      `*Профиль твоего собеседника:*\n*Имя и фамилия:*\n${name} @${username}\n*Команда, роль, задачи 👨🏻‍💻:*\n${workspace}\n${
-        hobbies ? `*Хобби, увлечения 🏂🏻:*\n${hobbies}` : ""
-      }`
-    );
+
+    let { name, workspace, hobbies, photo_id, username } = user;
+    name = parseForMarkdown(name);
+    const nameLink = `[${name}](tg://user?id=${tid})`;
+    if (username) username = parseForMarkdown(`@${username}`);
+    hobbies = parseForMarkdown(hobbies);
+
+    const text = `*Профиль твоего собеседника:*\n*Имя и фамилия:*\n${
+      username ? name : nameLink
+    } ${username ? username : ""}\n*Команда, роль, задачи 👨🏻‍💻:*\n${workspace}\n${
+      hobbies ? `*Хобби, увлечения 🏂🏻:*\n${hobbies}` : ""
+    }`;
 
     if (photo_id) {
       await ctx.replyWithPhoto(photo_id, {

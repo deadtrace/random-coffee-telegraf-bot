@@ -3,13 +3,17 @@ dotenv.config();
 import { Markup } from "telegraf";
 import User from "../models/User.js";
 import logError from "./logError.js";
+import parseForMarkdown from "./parseForMarkdown.js";
 
 const randomCoffeeFound = async (ctx, id, user, meetingId) => {
-  const { tid, username } = user;
+  const { tid, username, name } = user;
+  const userInfo = username
+    ? parseForMarkdown(`@${username}`)
+    : `[${parseForMarkdown(name)}](tg://user?id=${tid})`;
   try {
     await ctx.telegram.sendMessage(
       id,
-      `Мы нашли тебе коллегу для встречи - @${username}\nПостарайся провести встречу в течение одной недели.\nПровели встречу – проинформируй об успешности встречи по кнопке снизу\nНе сможешь провести встречу – отмени ее также по кнопке снизу`,
+      `Мы нашли тебе коллегу для встречи – ${userInfo}\nПостарайся провести встречу в течение одной недели\\.\nПровели встречу – проинформируй об успешности встречи по кнопке снизу\\.\nНе сможешь провести встречу – отмени ее также по кнопке снизу\\.`,
       {
         reply_markup: {
           inline_keyboard: [
@@ -33,13 +37,11 @@ const randomCoffeeFound = async (ctx, id, user, meetingId) => {
             ],
           ],
         },
+        parse_mode: "MarkdownV2",
       }
     );
   } catch (error) {
-    if (
-      error.response?.error_code === 403 ||
-      error.response?.error_code === 400
-    ) {
+    if (error.response?.error_code === 403) {
       await User.findOneAndDelete({ tid: id });
     } else {
       logError(error, ctx);
