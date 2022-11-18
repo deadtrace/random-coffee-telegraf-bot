@@ -15,7 +15,7 @@ feedback.on("text", async (ctx) => {
     );
   }
 
-  const formattedText = `Отзыв о работе бота от @${ctx.chat.username}:\n${ctx.message.text}`;
+  const formattedText = `Отзыв о работе бота от @${ctx.chat.username}(${ctx.chat.id}):\n${ctx.message.text}`;
   const { FEEDBACK_CHANNEL_ID } = process.env;
   try {
     await ctx.telegram.sendMessage(FEEDBACK_CHANNEL_ID, formattedText);
