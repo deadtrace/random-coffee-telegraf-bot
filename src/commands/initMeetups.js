@@ -13,54 +13,77 @@ import ChatAdmin from "../models/ChatAdmin.js";
 
 const initMeetups = async (ctx) => {
   if (ctx.chat.id === +process.env.ADMIN_ID) {
-    await prepareStats(ctx);
-    await Meeting.deleteMany({});
+    try {
+      await prepareStats(ctx);
+      await Meeting.deleteMany({});
 
-    const registeredUsers = await User.find({ registered: true }).exec();
-    const pairs = chunk(shuffle(registeredUsers), 2);
+      const fetchedUsers = await User.find({ registered: true }).exec();
+      const registeredUsers =
+        fetchedUsers.length % 2 === 1
+          ? fetchedUsers.filter((user) => user.tid !== +process.env.ADMIN_ID)
+          : fetchedUsers;
+      const pairs = chunk(shuffle(registeredUsers), 2);
 
-    for (let pair of pairs) {
-      if (pair.length === 2) {
-        const [user1, user2] = pair;
-        try {
-          const meeting = await Meeting.create({
-            tid1: user1.tid,
-            tid2: user2.tid,
-            status: MEETING_STATUSES.NEW,
-          });
+      for (let pair of pairs) {
+        if (pair.length === 2) {
+          const [user1, user2] = pair;
+          try {
+            const meeting = await Meeting.create({
+              tid1: user1.tid,
+              tid2: user2.tid,
+              status: MEETING_STATUSES.NEW,
+            });
 
-          await randomCoffeeFound(
-            ctx,
-            user1.tid,
-            user2,
-            meeting._id.toString()
-          );
-          await randomCoffeeFound(
-            ctx,
-            user2.tid,
-            user1,
-            meeting._id.toString()
-          );
-        } catch (error) {
-          logError(error, ctx);
-        }
-      } else {
-        // ОБРАБОТКА СЛУЧАЯ НЕЧЁТНОГО ПОЛЬЗОВАТЕЛЯ, ЕМУ В КАЧЕСТВЕ ПАРЫ НЕОБХОДИМО ОПРЕДЕЛИТЬ ОДНОГО ИЗ АДМИНИСТРАТОРОВ
-        const [user] = pair;
-        try {
-          const admins = await ChatAdmin.find().exec();
-          const admin = admins[Math.floor(Math.random() * admins.length)];
-          const meeting = await Meeting.create({
-            tid1: user.tid,
-            tid2: admin.tid,
-            status: MEETING_STATUSES.NEW,
-          });
-          await randomCoffeeFound(ctx, user.tid, admin, meeting._id.toString());
-          await randomCoffeeFound(ctx, admin.tid, user, meeting._id.toString());
-        } catch (error) {
-          logError(error, ctx);
+            await randomCoffeeFound(
+              ctx,
+              user1.tid,
+              user2,
+              meeting._id.toString()
+            );
+            await randomCoffeeFound(
+              ctx,
+              user2.tid,
+              user1,
+              meeting._id.toString()
+            );
+          } catch (error) {
+            logError(error, ctx);
+          }
+        } else {
+          // ОБРАБОТКА СЛУЧАЯ НЕЧЁТНОГО ПОЛЬЗОВАТЕЛЯ, ЕМУ В КАЧЕСТВЕ ПАРЫ НЕОБХОДИМО ОПРЕДЕЛИТЬ ОДНОГО ИЗ АДМИНИСТРАТОРОВ
+          const [user] = pair;
+          try {
+            const admins = await ChatAdmin.find().exec();
+            const admin = admins[Math.floor(Math.random() * admins.length)];
+            const meeting = await Meeting.create({
+              tid1: user.tid,
+              tid2: admin.tid,
+              status: MEETING_STATUSES.NEW,
+            });
+            await randomCoffeeFound(
+              ctx,
+              user.tid,
+              admin,
+              meeting._id.toString()
+            );
+            await randomCoffeeFound(
+              ctx,
+              admin.tid,
+              user,
+              meeting._id.toString()
+            );
+          } catch (error) {
+            logError(error, ctx);
+          }
         }
       }
+
+      ctx.telegram.sendMessage(
+        process.env.FEEDBACK_CHANNEL_ID,
+        "Рассылка встреч успешно отработала"
+      );
+    } catch (error) {
+      logError(error, ctx);
     }
   } else {
     await ctx.reply(TEXTS.NOT_ALLOWED_TO_USE_THIS_COMMAND);
