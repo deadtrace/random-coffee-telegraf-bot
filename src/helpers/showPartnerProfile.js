@@ -14,7 +14,7 @@ const showPartnerProfile = async (ctx, tid) => {
     const nameLink = `[${name}](tg://user?id=${tid})`;
     workspace = parseForMarkdown(workspace);
     if (username) username = parseForMarkdown(`@${username}`);
-    hobbies = parseForMarkdown(hobbies);
+    if (hobbies) hobbies = parseForMarkdown(hobbies);
 
     const text = `*Профиль твоего собеседника:*\n*Имя и фамилия:*\n${
       username ? name : nameLink
