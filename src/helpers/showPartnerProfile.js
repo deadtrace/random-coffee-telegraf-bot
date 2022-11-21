@@ -12,6 +12,7 @@ const showPartnerProfile = async (ctx, tid) => {
     let { name, workspace, hobbies, photo_id, username } = user;
     name = parseForMarkdown(name);
     const nameLink = `[${name}](tg://user?id=${tid})`;
+    workspace = parseForMarkdown(workspace);
     if (username) username = parseForMarkdown(`@${username}`);
     hobbies = parseForMarkdown(hobbies);
 
