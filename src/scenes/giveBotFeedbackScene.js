@@ -15,15 +15,19 @@ feedback.on("text", async (ctx) => {
     );
   }
 
-  const formattedText = `Отзыв о работе бота от @${ctx.chat.username}(${ctx.chat.id}):\n${ctx.message.text}`;
+  const { text } = ctx.message;
+  const { username, id } = ctx.chat;
+  const formattedText = `Отзыв о работе бота от ${
+    username ? `@${username}` : ""
+  }(${id}):\n${text}`;
   const { FEEDBACK_CHANNEL_ID } = process.env;
   try {
     await ctx.telegram.sendMessage(FEEDBACK_CHANNEL_ID, formattedText);
     await Feedback.create({
-      tid: ctx.chat.id,
-      username: String(ctx.chat.username),
+      tid: id,
+      username: String(username),
       type: "bot",
-      text: ctx.message.text,
+      text,
     });
     await ctx.reply("Спасибо за обратную связь!");
   } catch (error) {

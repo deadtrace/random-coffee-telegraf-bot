@@ -33,7 +33,7 @@ const sendReminder = async (ctx, tid1, tid2, meetingId) => {
     );
   } catch (error) {
     if (error.response?.error_code === 403) {
-      await User.findOneAndDelete({ tid: id });
+      await User.findOneAndDelete({ tid: tid1 });
     } else {
       logError(error, ctx);
     }

@@ -34,16 +34,21 @@ feedback.on("text", async (ctx) => {
     }
   }
 
-  const formattedText = `Отзыв о встрече от @${ctx.chat.username}:\n${ctx.message.text}`;
+  const { username, id } = ctx.chat;
+  const { text } = ctx.message;
+
+  const formattedText = `Отзыв о встрече от ${
+    username ? `@${username}` : ""
+  }(${id}):\n${text}`;
   const { FEEDBACK_CHANNEL_ID } = process.env;
 
   try {
     await ctx.telegram.sendMessage(FEEDBACK_CHANNEL_ID, formattedText);
     await Feedback.create({
-      tid: ctx.chat.id,
-      username: String(ctx.chat.username),
+      tid: id,
+      username: String(username),
       type: "meeting",
-      text: ctx.message.text,
+      text,
     });
     await ctx.reply("Спасибо за отзыв о встрече!");
   } catch (error) {
