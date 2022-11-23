@@ -19,6 +19,11 @@ const remindMeetups = async (ctx) => {
       await sendReminder(ctx, tid1, tid2, _id.toString());
       await sendReminder(ctx, tid2, tid1, _id.toString());
     }
+
+    await ctx.telegram.sendMessage(
+      process.env.FEEDBACK_CHANNEL_ID,
+      "Рассылка напоминаний о встречах успешно отработала!"
+    );
   } catch (error) {
     logError(error, ctx);
   }
