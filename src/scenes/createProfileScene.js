@@ -38,7 +38,11 @@ hobbies.on("text", async (ctx) => {
   ctx.wizard.state.data.hobbies = ctx.message.text;
   const { lastBotMessage } = ctx.session;
   if (lastBotMessage) {
-    ctx.telegram.editMessageReplyMarkup(ctx.chat.id, lastBotMessage, "", {});
+    try {
+      ctx.telegram.editMessageReplyMarkup(ctx.chat.id, lastBotMessage, "", {});
+    } catch (error) {
+      console.error(error);
+    }
   }
   await hobbiesStageHandler(ctx);
 });
@@ -78,7 +82,11 @@ photo.on("photo", async (ctx) => {
   ctx.wizard.state.data.photo_id = ctx.message.photo[0].file_id;
   const { lastBotMessage } = ctx.session;
   if (lastBotMessage) {
-    ctx.telegram.editMessageReplyMarkup(ctx.chat.id, lastBotMessage, "", {});
+    try {
+      ctx.telegram.editMessageReplyMarkup(ctx.chat.id, lastBotMessage, "", {});
+    } catch (error) {
+      console.error(error);
+    }
   }
   await photoStageHandler(ctx);
 });

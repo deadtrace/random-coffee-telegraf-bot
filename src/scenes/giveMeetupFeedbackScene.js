@@ -11,12 +11,16 @@ const feedback = new Composer();
 feedback.on("text", async (ctx) => {
   const { lastBotMessage, meetupId } = ctx.session;
   if (lastBotMessage) {
-    await ctx.telegram.editMessageReplyMarkup(
-      ctx.chat.id,
-      lastBotMessage,
-      "",
-      {}
-    );
+    try {
+      await ctx.telegram.editMessageReplyMarkup(
+        ctx.chat.id,
+        lastBotMessage,
+        "",
+        {}
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   if (meetupId) {

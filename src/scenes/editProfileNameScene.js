@@ -12,12 +12,16 @@ handleEdit.on("text", async (ctx) => {
     );
     const { lastBotMessage } = ctx.session;
     if (lastBotMessage) {
-      await ctx.telegram.editMessageReplyMarkup(
-        ctx.chat.id,
-        lastBotMessage,
-        "",
-        {}
-      );
+      try {
+        await ctx.telegram.editMessageReplyMarkup(
+          ctx.chat.id,
+          lastBotMessage,
+          "",
+          {}
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
     await ctx.reply("Данные изменены!");
   } catch (error) {
