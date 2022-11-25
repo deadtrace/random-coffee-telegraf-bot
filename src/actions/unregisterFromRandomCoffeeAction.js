@@ -3,8 +3,8 @@ import User from "../models/User.js";
 import { TEXTS } from "../texts.js";
 
 const unegisterFromRandomCoffeeAction = async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);

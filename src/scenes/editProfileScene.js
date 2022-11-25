@@ -1,11 +1,10 @@
 import { Scenes, Composer, Markup } from "telegraf";
 import SCENES from "./scenesList.js";
-import showMainButtons from "../helpers/showMainButtons.js";
 
 const handleEdit = new Composer();
 handleEdit.action("edit-name", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);
@@ -14,8 +13,8 @@ handleEdit.action("edit-name", async (ctx) => {
   return ctx.scene.enter(SCENES.EDIT_PROFILE_NAME);
 });
 handleEdit.action("edit-workspace", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);
@@ -24,8 +23,8 @@ handleEdit.action("edit-workspace", async (ctx) => {
   return ctx.scene.enter(SCENES.EDIT_PROFILE_WORKSPACE);
 });
 handleEdit.action("edit-hobbies", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);
@@ -34,8 +33,8 @@ handleEdit.action("edit-hobbies", async (ctx) => {
   return ctx.scene.enter(SCENES.EDIT_PROFILE_HOBBIES);
 });
 handleEdit.action("edit-photo", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);
@@ -44,8 +43,8 @@ handleEdit.action("edit-photo", async (ctx) => {
   return ctx.scene.enter(SCENES.EDIT_PROFILE_PHOTO);
 });
 handleEdit.action("back", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);

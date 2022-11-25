@@ -1,8 +1,8 @@
 import SCENES from "../scenes/scenesList.js";
 
 const viewProfileAction = async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);

@@ -31,8 +31,8 @@ handleEdit.on("photo", async (ctx) => {
   return ctx.scene.enter(SCENES.EDIT_PROFILE);
 });
 handleEdit.action("back", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);

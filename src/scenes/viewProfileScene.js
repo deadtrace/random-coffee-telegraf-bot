@@ -5,8 +5,8 @@ import showProfileInfo from "../helpers/showProfileInfo.js";
 
 const profileActions = new Composer();
 profileActions.action("back", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);
@@ -15,8 +15,8 @@ profileActions.action("back", async (ctx) => {
   return ctx.scene.leave();
 });
 profileActions.action("watch", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);
@@ -26,8 +26,8 @@ profileActions.action("watch", async (ctx) => {
   return ctx.scene.leave();
 });
 profileActions.action("edit", async (ctx) => {
-  await ctx.answerCbQuery();
   try {
+    await ctx.answerCbQuery();
     await ctx.deleteMessage();
   } catch (error) {
     console.error(error);

@@ -99,34 +99,50 @@ bot.action(
 
 bot.action(/register_(.+)/, async (ctx) => {
   const value = ctx.match[1] === "true";
-  await ctx.answerCbQuery();
-  await ctx.editMessageReplyMarkup();
+  try {
+    await ctx.answerCbQuery();
+    await ctx.editMessageReplyMarkup();
+  } catch (error) {
+    console.error(error);
+  }
   await handleRegister(ctx, value);
 });
 
-bot.action(/meetup_watch-partner_(.+)/, async (ctx, next) => {
-  await ctx.answerCbQuery();
+bot.action(/meetup_watch-partner_(.+)/, async (ctx) => {
+  try {
+    await ctx.answerCbQuery();
+  } catch (error) {
+    console.error(error);
+  }
   await showPartnerProfile(ctx, +ctx.match[1]);
 });
 bot.action(/meetup_happened_(.+)/, async (ctx) => {
-  await ctx.answerCbQuery();
-  await ctx.editMessageReplyMarkup();
+  try {
+    await ctx.answerCbQuery();
+    await ctx.editMessageReplyMarkup();
+  } catch (error) {
+    console.error(error);
+  }
   ctx.session.meetupId = ctx.match[1];
   await ctx.scene.enter(SCENES.GIVE_MEETUP_FEEDBACK);
 });
 bot.action(/meetup_cancel_(.+)/, async (ctx) => {
-  await ctx.answerCbQuery();
-  await ctx.editMessageReplyMarkup();
+  try {
+    await ctx.answerCbQuery();
+    await ctx.editMessageReplyMarkup();
+  } catch (error) {
+    console.error(error);
+  }
   await cancelMeeting(ctx, ctx.match[1]);
 });
 
 bot.action(/.+/, async (ctx) => {
   try {
     await ctx.deleteMessage();
+    await ctx.answerCbQuery();
   } catch (error) {
     console.error(error);
   }
-  return ctx.answerCbQuery();
 });
 
 // launching
