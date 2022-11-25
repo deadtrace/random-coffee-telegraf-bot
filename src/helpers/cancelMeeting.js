@@ -2,10 +2,15 @@ import { MEETING_STATUSES } from "../constants.js";
 import Meeting from "../models/Meeting.js";
 import { TEXTS } from "../texts.js";
 import logError from "./logError.js";
+import showMainButtons from "./showMainButtons.js";
 
 const cancelMeeting = async (ctx, meeetingId) => {
   try {
     const meeting = await Meeting.findById(meeetingId);
+    if (!meeting) {
+      await ctx.reply("Обязательно присоединяйся к новым встречам!");
+      return await showMainButtons(ctx);
+    }
 
     if (meeting) {
       if (meeting.status === MEETING_STATUSES.CANCELED) {

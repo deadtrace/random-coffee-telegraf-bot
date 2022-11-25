@@ -111,14 +111,27 @@ feedback.action("without-feedback", async (ctx) => {
 const giveMeetupFeedbackScene = new Scenes.WizardScene(
   SCENES.GIVE_MEETUP_FEEDBACK,
   async (ctx) => {
-    const { message_id } = await ctx.reply(
-      "Как прошла встреча? Напиши отзыв",
-      Markup.inlineKeyboard([
-        Markup.button.callback("Без отзыва", "without-feedback"),
-      ])
-    );
-    ctx.session.lastBotMessage = message_id;
-    return ctx.wizard.next();
+    try {
+      const { meetupId } = ctx.session;
+      if (meetupId) {
+        const meeting = await Meeting.findById(meetupId);
+        if (!meeting) {
+          await ctx.reply("Надеемся, тебе понравилась встреча)");
+          await showMainButtons(ctx);
+          return ctx.scene.leave();
+        }
+      }
+      const { message_id } = await ctx.reply(
+        "Как прошла встреча? Напиши отзыв",
+        Markup.inlineKeyboard([
+          Markup.button.callback("Без отзыва", "without-feedback"),
+        ])
+      );
+      ctx.session.lastBotMessage = message_id;
+      return ctx.wizard.next();
+    } catch (error) {
+      logError(error, ctx);
+    }
   },
   feedback
 );
