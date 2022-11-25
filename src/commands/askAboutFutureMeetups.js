@@ -36,6 +36,10 @@ const askAboutFutureMeetups = async (ctx) => {
           }
         }
       }
+      await ctx.telegram.sendMessage(
+        process.env.FEEDBACK_CHANNEL_ID,
+        "Рассылка вопросов об участии на следующей работе успешно отработала!"
+      );
     } catch (error) {
       logError(error, ctx);
     }
