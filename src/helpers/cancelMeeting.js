@@ -32,7 +32,10 @@ const cancelMeeting = async (ctx, meeetingId) => {
         );
       } catch (error) {
         if (error.response?.error_code === 403) {
-          await User.findOneAndDelete({ tid: partnerId });
+          await User.findOneAndUpdate(
+            { tid: partnerId },
+            { registered: false }
+          );
         } else {
           logError(error, ctx);
         }

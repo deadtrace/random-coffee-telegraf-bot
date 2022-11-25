@@ -30,7 +30,7 @@ const askAboutFutureMeetups = async (ctx) => {
           });
         } catch (error) {
           if (error.response?.error_code === 403) {
-            await User.findOneAndDelete({ tid });
+            await User.findOneAndUpdate({ tid }, { registered: false });
           } else {
             throw error;
           }

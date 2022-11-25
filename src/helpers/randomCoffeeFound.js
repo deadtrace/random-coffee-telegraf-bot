@@ -42,7 +42,7 @@ const randomCoffeeFound = async (ctx, id, user, meetingId) => {
     );
   } catch (error) {
     if (error.response?.error_code === 403) {
-      await User.findOneAndDelete({ tid: id });
+      await User.findOneAndUpdate({ tid: id }, { registered: false });
     } else {
       logError(error, ctx);
     }
