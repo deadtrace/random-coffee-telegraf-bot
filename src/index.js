@@ -55,6 +55,8 @@ import cancelMeeting from "./helpers/cancelMeeting.js";
 import handleRegister from "./helpers/handleRegister.js";
 import logError from "./helpers/logError.js";
 import contactUser from "./commands/contactUser.js";
+import aliveEcho from "./commands/aliveEcho.js";
+import newYearCommand from "./commands/newYearCommand.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
@@ -86,6 +88,8 @@ bot.command("init_meetups", initMeetups);
 bot.command("remind_meetups", remindMeetups);
 bot.command("ask_about_future_meetups", askAboutFutureMeetups);
 bot.command("contact", contactUser);
+bot.command("alive", aliveEcho);
+bot.command("new_year", newYearCommand);
 
 // bot actions
 bot.action(ACTIONS.CREATE_PROFILE, createProfileAction);

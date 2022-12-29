@@ -31,14 +31,12 @@ const askAboutFutureMeetups = async (ctx) => {
         } catch (error) {
           if (error.response?.error_code === 403) {
             await User.findOneAndUpdate({ tid }, { registered: false });
-          } else {
-            throw error;
           }
         }
       }
       await ctx.telegram.sendMessage(
         process.env.FEEDBACK_CHANNEL_ID,
-        "Рассылка вопросов об участии на следующей работе успешно отработала!"
+        "Рассылка вопросов об участии на следующей неделе успешно отработала!"
       );
     } catch (error) {
       logError(error, ctx);
