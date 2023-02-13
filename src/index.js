@@ -56,7 +56,8 @@ import handleRegister from "./helpers/handleRegister.js";
 import logError from "./helpers/logError.js";
 import contactUser from "./commands/contactUser.js";
 import aliveEcho from "./commands/aliveEcho.js";
-import newYearCommand from "./commands/newYearCommand.js";
+import updateUsername from "./helpers/updateUsername.js";
+//import newYearCommand from "./commands/newYearCommand.js";
 
 // bot setup
 const bot = new Telegraf(BOT_TOKEN);
@@ -89,7 +90,7 @@ bot.command("remind_meetups", remindMeetups);
 bot.command("ask_about_future_meetups", askAboutFutureMeetups);
 bot.command("contact", contactUser);
 bot.command("alive", aliveEcho);
-bot.command("new_year", newYearCommand);
+//bot.command("new_year", newYearCommand);
 
 // bot actions
 bot.action(ACTIONS.CREATE_PROFILE, createProfileAction);
@@ -109,6 +110,7 @@ bot.action(/register_(.+)/, async (ctx) => {
   } catch (error) {
     console.error(error);
   }
+  updateUsername(ctx);
   await handleRegister(ctx, value);
 });
 
@@ -118,6 +120,7 @@ bot.action(/meetup_watch-partner_(.+)/, async (ctx) => {
   } catch (error) {
     console.error(error);
   }
+  updateUsername(ctx);
   await showPartnerProfile(ctx, +ctx.match[1]);
 });
 bot.action(/meetup_happened_(.+)/, async (ctx) => {
@@ -128,6 +131,7 @@ bot.action(/meetup_happened_(.+)/, async (ctx) => {
     console.error(error);
   }
   ctx.session.meetupId = ctx.match[1];
+  updateUsername(ctx);
   await ctx.scene.enter(SCENES.GIVE_MEETUP_FEEDBACK);
 });
 bot.action(/meetup_cancel_(.+)/, async (ctx) => {
@@ -137,6 +141,7 @@ bot.action(/meetup_cancel_(.+)/, async (ctx) => {
   } catch (error) {
     console.error(error);
   }
+  updateUsername(ctx);
   await cancelMeeting(ctx, ctx.match[1]);
 });
 
@@ -147,6 +152,7 @@ bot.action(/.+/, async (ctx) => {
   } catch (error) {
     console.error(error);
   }
+  updateUsername(ctx);
 });
 
 // launching
