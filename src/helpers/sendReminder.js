@@ -1,5 +1,6 @@
 import { Markup } from "telegraf";
 import logError from "./logError.js";
+import User from "../models/User.js";
 
 const sendReminder = async (ctx, tid1, tid2, meetingId) => {
   try {
@@ -33,7 +34,11 @@ const sendReminder = async (ctx, tid1, tid2, meetingId) => {
     );
   } catch (error) {
     if (error.response?.error_code === 403) {
-      await User.findOneAndUpdate({ tid: tid1 }, { registered: false });
+      try {
+        await User.findOneAndUpdate({ tid: tid1 }, { registered: false });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       logError(error, ctx);
     }
